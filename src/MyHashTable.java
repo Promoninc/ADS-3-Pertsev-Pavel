@@ -12,7 +12,7 @@ public class MyHashTable<K, V> {
             return "{" + key + " " + value + "}";
         }
     }
-    private MyHashNode[] buckets;
+    private MyHashNode<K, V>[] buckets;
     private int capacity = 11;
     private int size;
     public MyHashTable(){
@@ -25,7 +25,8 @@ public class MyHashTable<K, V> {
         size = 0;
     }
     private int hash(K key){
-        return key.hashCode() % capacity;
+
+        return (key.hashCode() & 0x7fffffff) % capacity;
     }
     public void put(K key, V value){
         int index = hash(key);
