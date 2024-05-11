@@ -12,7 +12,7 @@ public class Main {
         bst.put(7, "seven");
 
         for (Pair<Integer, String> pair : bst.iterator()) {
-            System.out.println("Key: " + pair.key + ", Value: " + pair.value);
+            System.out.println("Key: " + pair.getKey() + ", Value: " + pair.getValue());
         }
         System.out.println(bst.get(3));
     }

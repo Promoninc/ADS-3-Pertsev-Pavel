@@ -47,8 +47,8 @@ public class MyBST<K extends Comparable<K>, V> {
     }
     public V get(K key){
         for(Pair<K, V> pair: this.iterator()){
-            if(pair.key == key){
-                return pair.value;
+            if(pair.getKey() == key){
+                return pair.getValue();
             }
         }
         return null;
