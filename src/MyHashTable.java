@@ -25,7 +25,6 @@ public class MyHashTable<K, V> {
         size = 0;
     }
     private int hash(K key){
-
         return (key.hashCode() & 0x7fffffff) % capacity;
     }
     public void put(K key, V value){
@@ -85,5 +84,14 @@ public class MyHashTable<K, V> {
             }
         }
         return null;
+    }
+    public int getNumberOfChains(int bucketIndex){
+        int count = 0;
+        MyHashNode currentNode = buckets[bucketIndex];
+        while(currentNode != null){
+            currentNode = currentNode.next;
+            count++;
+        }
+        return count;
     }
 }

@@ -1,8 +1,8 @@
-public class MyTestingClass {
+public class StudentSpecs {
     private String name;
     private String surname;
     private int age;
-    MyTestingClass(String name, String surname, int age){
+    StudentSpecs(String name, String surname, int age){
         this.name = name;
         this.surname = surname;
         this.age = age;
