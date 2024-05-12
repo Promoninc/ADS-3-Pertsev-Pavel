@@ -2,18 +2,26 @@ import java.util.Iterator;
 import java.util.Stack;
 
 public class MyBST<K extends Comparable<K>, V> {
-    private MyNode root;
-    private int size;
-    private class MyNode {
-        public K key;
-        public V value;
-        private MyNode left, right;
+    private class MyNode<K extends Comparable<K>, V> {
+        private K key;
+        private V value;
+        public MyNode left, right;
+
+        public V getValue(){
+            return value;
+        }
+
+        public K getKey(){
+            return key;
+        }
 
         public MyNode(K key, V value) {
             this.key = key;
             this.value = value;
         }
     }
+    private MyNode root;
+    private int size;
 
     public void put(K key, V value) {
         size++;
@@ -24,7 +32,7 @@ public class MyBST<K extends Comparable<K>, V> {
         }
         MyNode currentNode = root;
         while (true) {
-            int cmp = key.compareTo(currentNode.key);
+            int cmp = key.compareTo((K) currentNode.getKey());
             if (cmp < 0) {
                 if (currentNode.left == null) {
                     currentNode.left = newNode;
@@ -46,30 +54,32 @@ public class MyBST<K extends Comparable<K>, V> {
         }
     }
     public V get(K key){
-        for(Pair<K, V> pair: this.iterator()){
-            if(pair.getKey() == key){
-                return pair.getValue();
+        for(var elem: this.iterator()){
+            if(elem.getKey() == key){
+                return elem.getValue();
             }
         }
         return null;
     }
     public void delete(K key){
+        for(var elem : iterator()){
 
+        }
     }
     public int size(){
         return size;
     }
 
-    public Iterable<Pair<K, V>> iterator() {
+    public Iterable<MyNode<K, V>> iterator() {
         return new BSTIterator();
     }
 
-    private class BSTIterator implements Iterable<Pair<K, V>> {
+    private class BSTIterator implements Iterable<MyNode<K, V>> {
         private Stack<MyNode> stack = new Stack<>();
         private MyNode currentNode = root;
 
         @Override
-        public Iterator<Pair<K, V>> iterator() {
+        public Iterator<MyNode<K, V>> iterator() {
             return new Iterator<>() {
                 @Override
                 public boolean hasNext() {
@@ -77,7 +87,7 @@ public class MyBST<K extends Comparable<K>, V> {
                 }
 
                 @Override
-                public Pair<K, V> next() {
+                public MyNode next() {
                     while (currentNode != null) {
                         stack.push(currentNode);
                         currentNode = currentNode.left;
@@ -86,7 +96,7 @@ public class MyBST<K extends Comparable<K>, V> {
                     MyNode node = stack.pop();
                     currentNode = node.right;
 
-                    return new Pair<>(node.key, node.value);
+                    return node;
                 }
             };
         }
