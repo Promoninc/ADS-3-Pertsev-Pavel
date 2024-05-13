@@ -2,7 +2,7 @@ import java.util.Iterator;
 import java.util.Stack;
 
 public class MyBST<K extends Comparable<K>, V> {
-    private class MyNode<K extends Comparable<K>, V> {
+    public class MyNode<K extends Comparable<K>, V> {
         private K key;
         private V value;
         public MyNode left, right;
@@ -61,10 +61,56 @@ public class MyBST<K extends Comparable<K>, V> {
         }
         return null;
     }
-    public void delete(K key){
-        for(var elem : iterator()){
 
+    public void delete(K key){
+        MyNode current = root;
+        MyNode parent = null;
+        while (current != null){
+            int cmp = key.compareTo((K) current.getKey());
+            if(cmp < 0){
+                parent = current;
+                current = current.left;
+            }
+            else if(cmp > 0){
+                parent = current;
+                current = current.right;
+            }
+            else{
+                if(current.right == null) {
+                    if(parent == null) {
+                        root = current.left;
+                    }
+                    else if(parent.left == current) {
+                        parent.left = current.left;
+                    }
+                    else{
+                        parent.right = current.left;
+                    }
+                }
+                else{
+                    MyNode minRight = findMin(current.right);
+                    current.key = minRight.getKey();
+                    current.value = minRight.getValue();
+                    current.right = deleteMin(current.right);
+                }
+                break;
+            }
         }
+        size--;
+    }
+
+    private MyNode findMin(MyNode currentNode) {
+        while (currentNode.left != null) {
+            currentNode = currentNode.left;
+        }
+        return currentNode;
+    }
+    private MyNode deleteMin(MyNode currentNode) {
+        if (currentNode.left == null) {
+            return currentNode.right;
+        }
+        currentNode.left = deleteMin(currentNode.left);
+        return currentNode;
     }
     public int size(){
         return size;
